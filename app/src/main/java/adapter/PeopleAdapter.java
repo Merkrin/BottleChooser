@@ -1,18 +1,17 @@
 package adapter;
 
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.merkrin.bottlechooser.R;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.Random;
 
@@ -20,13 +19,13 @@ public class PeopleAdapter extends RecyclerView.Adapter<PeopleAdapter.PersonView
 
     private List<String> peopleList = new ArrayList<>();
 
-    static Random random = new Random();
+    private static Random random = new Random();
     private int checkedPosition = -1;
 
-    public void setItems(Collection<String> people) {
-        peopleList.addAll(people);
-        notifyDataSetChanged();
-    }
+//    public void setItems(Collection<String> people) {
+//        peopleList.addAll(people);
+//        notifyDataSetChanged();
+//    }
 
     public void addItem(String personName) {
         peopleList.add(personName);
@@ -54,19 +53,20 @@ public class PeopleAdapter extends RecyclerView.Adapter<PeopleAdapter.PersonView
             return "No pair can be made!";
 
         List<String> peopleCopy = new ArrayList<>(peopleList);
-        int index = randomNextInt(0, peopleCopy.size());
+        int index = random.nextInt(peopleCopy.size());
 
         StringBuilder result = new StringBuilder(peopleCopy.get(index));
         peopleCopy.remove(index);
 
         result.append(" -> ");
 
-        index = randomNextInt(0, peopleCopy.size());
+        index = random.nextInt(peopleCopy.size());
         result.append(peopleCopy.get(index));
 
         return result.toString();
     }
 
+    @NonNull
     @Override
     public PersonViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
@@ -88,14 +88,14 @@ public class PeopleAdapter extends RecyclerView.Adapter<PeopleAdapter.PersonView
         private TextView nameTextView;
         private ImageView checkedImageView;
 
-        public PersonViewHolder(View itemView) {
+        PersonViewHolder(View itemView) {
             super(itemView);
 
             nameTextView = itemView.findViewById(R.id.person_name_text_view);
             checkedImageView = itemView.findViewById(R.id.checkedImageView);
         }
 
-        public void bind(String person) {
+        void bind(CharSequence person) {
             if (checkedPosition == -1)
                 checkedImageView.setVisibility(View.GONE);
             else {
@@ -123,9 +123,5 @@ public class PeopleAdapter extends RecyclerView.Adapter<PeopleAdapter.PersonView
 
     public int getSelected() {
         return checkedPosition;
-    }
-
-    private int randomNextInt(int min, int max) {
-        return random.nextInt(max - min) + min;
     }
 }

@@ -1,24 +1,27 @@
 package com.merkrin.bottlechooser;
 
+import android.content.Context;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.view.Display;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.Arrays;
-import java.util.Collection;
+//import java.util.Arrays;
+//import java.util.Collection;
+
+import java.util.Objects;
 
 import adapter.PeopleAdapter;
 
@@ -72,6 +75,17 @@ public class FirstFragment extends Fragment {
             }
         });
 
+        view.findViewById(R.id.personNameEditText).setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (event.getAction() == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_ENTER) {
+                    addPerson();
+                    return true;
+                }
+                return false;
+            }
+        });
+
         personEditText = view.findViewById(R.id.personNameEditText);
         resultTextView = view.findViewById(R.id.resultTextView);
     }
@@ -82,6 +96,11 @@ public class FirstFragment extends Fragment {
         if (!name.isEmpty()) {
             peopleAdapter.addItem(name);
         }
+
+        InputMethodManager mgr = (InputMethodManager) Objects.requireNonNull(getActivity())
+                .getSystemService(Context.INPUT_METHOD_SERVICE);
+        if (mgr != null)
+            mgr.hideSoftInputFromWindow(personEditText.getWindowToken(), 0);
 
         personEditText.setText("");
     }
@@ -105,7 +124,7 @@ public class FirstFragment extends Fragment {
 
         ViewGroup.LayoutParams params = listOfPeopleView.getLayoutParams();
         Point size = new Point();
-        Display display = getActivity().getWindowManager().getDefaultDisplay();
+        Display display = Objects.requireNonNull(getActivity()).getWindowManager().getDefaultDisplay();
         display.getSize(size);
         params.height = size.y / 2;
         listOfPeopleView.setLayoutParams(params);
