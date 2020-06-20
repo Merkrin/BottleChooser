@@ -9,6 +9,13 @@
         android:id="@+id/FirstFragment"
         android:name="com.merkrin.bottlechooser.FirstFragment"
         android:label="@string/first_fragment_label"
-        tools:layout="@layout/fragment_first">
+        tools:layout="@layout/fragment_pair_maker">
+    </fragment>
+
+    <fragment
+        android:id="@+id/WordRandomizerFragment"
+        android:name="com.merkrin.bottlechooser.WordRandomizerFragment"
+        android:label="Word randomizer"
+        tools:layout="@layout/fragment_word_randomizer">
     </fragment>
 </navigation>
