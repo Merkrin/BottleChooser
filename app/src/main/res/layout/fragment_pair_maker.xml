@@ -7,7 +7,6 @@
     android:paddingBottom="?attr/actionBarSize"
     tools:context=".ui.pairs.PairsFragment">
 
-
     <LinearLayout
         android:id="@+id/listLayout"
         android:layout_width="match_parent"
@@ -40,7 +39,6 @@
         </LinearLayout>
 
         <TextView
-            android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"

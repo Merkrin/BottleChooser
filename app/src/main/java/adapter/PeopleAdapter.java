@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.merkrin.bottlechooser.R;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Random;
 
@@ -22,10 +23,14 @@ public class PeopleAdapter extends RecyclerView.Adapter<PeopleAdapter.PersonView
     private static Random random = new Random();
     private int checkedPosition = -1;
 
-//    public void setItems(Collection<String> people) {
-//        peopleList.addAll(people);
-//        notifyDataSetChanged();
-//    }
+    public void setItems(Collection<String> people) {
+        peopleList.addAll(people);
+        notifyDataSetChanged();
+    }
+
+    public List<String> getPeopleList(){
+        return peopleList;
+    }
 
     public void addItem(String personName) {
         peopleList.add(personName);
